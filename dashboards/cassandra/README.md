@@ -3,7 +3,7 @@
 #### Notes
 
 This dashboard is based on Google's [Ops Agent](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent).
-Check the [full list of metrics]((https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent/third-party/cassandra#monitored-metrics)) supported by the Ops Agent.
+Check the [full list of metrics](https://cloud.google.com/stackdriver/docs/solutions/agents/ops-agent/third-party/cassandra#monitored-metrics) supported by the Ops Agent.
 
 
 |Cassandra GCE Overview|
