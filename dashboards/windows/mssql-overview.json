@@ -1,0 +1,247 @@
+{
+  "category": "CUSTOM",
+  "displayName": "MS SQL Server Overview",
+  "mosaicLayout": {
+    "columns": 12,
+    "tiles": [
+      {
+        "height": 4,
+        "widget": {
+          "title": "SQL Server open connections",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "apiSource": "DEFAULT_CLOUD",
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_MEAN",
+                      "groupByFields": [
+                        "resource.label.\"project_id\"",
+                        "resource.label.\"instance_id\"",
+                        "resource.label.\"zone\""
+                      ],
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/mssql/connections/user\" resource.type=\"gce_instance\""
+                  }
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 0,
+        "yPos": 0
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "SQL Server transaction rate",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "apiSource": "DEFAULT_CLOUD",
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_MEAN",
+                      "groupByFields": [
+                        "resource.label.\"project_id\"",
+                        "resource.label.\"instance_id\"",
+                        "resource.label.\"zone\""
+                      ],
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/mssql/transaction_rate\" resource.type=\"gce_instance\""
+                  }
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 6,
+        "yPos": 0
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "SQL Server write transaction rate",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "minAlignmentPeriod": "60s",
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "apiSource": "DEFAULT_CLOUD",
+                  "timeSeriesFilter": {
+                    "aggregation": {
+                      "alignmentPeriod": "60s",
+                      "crossSeriesReducer": "REDUCE_MEAN",
+                      "groupByFields": [
+                        "resource.label.\"project_id\"",
+                        "resource.label.\"instance_id\"",
+                        "resource.label.\"zone\""
+                      ],
+                      "perSeriesAligner": "ALIGN_MEAN"
+                    },
+                    "filter": "metric.type=\"agent.googleapis.com/mssql/write_transaction_rate\" resource.type=\"gce_instance\""
+                  }
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 0,
+        "yPos": 4
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "Pagefile utilization",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "timeSeriesQueryLanguage": "def top_metric_filtered_by_another_metric measure_metric, filter_metric, top_number =\n  fetch gce_instance\n  | { t_measure: metric $measure_metric ; t_filter_metric: metric $filter_metric }\n  | join\n  | value [output_value: val(0)]\n  | group_by [resource.project_id, resource.zone, resource.instance_id], 1m,\n      [measure_value_mean: mean(output_value)]\n  | top $top_number\n  | every 1m;\n\n@top_metric_filtered_by_another_metric\n  'agent.googleapis.com/pagefile/percent_used', \n  'agent.googleapis.com/mssql/connections/user',\n  10"
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 6,
+        "yPos": 4
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "VM Instance - CPU utilization",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "timeSeriesQueryLanguage": "def top_metric_filtered_by_another_metric measure_metric, filter_metric, top_number =\n  fetch gce_instance\n  | { t_measure: metric $measure_metric ; t_filter_metric: metric $filter_metric }\n  | join\n  | value [output_value: val(0)]\n  | group_by [resource.project_id, resource.zone, resource.instance_id], 1m,\n      [measure_value_mean: mean(output_value)]\n  | top $top_number\n  | every 1m;\n\n@top_metric_filtered_by_another_metric\n  'agent.googleapis.com/cpu/utilization', \n  'agent.googleapis.com/mssql/connections/user',\n  10"
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 0,
+        "yPos": 8
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "VM Instance - Disk utilization",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "timeSeriesQueryLanguage": "def top_metric_filtered_by_another_metric measure_metric, filter_metric, top_number =\n  fetch gce_instance\n  | { t_measure: metric $measure_metric ; t_filter_metric: metric $filter_metric }\n  | join\n  | value [output_value: val(0)]\n  | group_by [resource.project_id, resource.zone, resource.instance_id], 1m,\n      [measure_value_mean: mean(output_value)]\n  | top $top_number\n  | every 1m;\n\n@top_metric_filtered_by_another_metric\n  'agent.googleapis.com/disk/percent_used', \n  'agent.googleapis.com/mssql/connections/user',\n  10"
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 6,
+        "yPos": 8
+      },
+      {
+        "height": 4,
+        "widget": {
+          "title": "VM Instance - Memory utilization",
+          "xyChart": {
+            "chartOptions": {
+              "mode": "COLOR"
+            },
+            "dataSets": [
+              {
+                "plotType": "LINE",
+                "targetAxis": "Y1",
+                "timeSeriesQuery": {
+                  "timeSeriesQueryLanguage": "def top_metric_filtered_by_another_metric measure_metric, filter_metric, top_number =\n  fetch gce_instance\n  | { t_measure: metric $measure_metric ; t_filter_metric: metric $filter_metric }\n  | join\n  | value [output_value: val(0)]\n  | group_by [resource.project_id, resource.zone, resource.instance_id], 1m,\n      [measure_value_mean: mean(output_value)]\n  | top $top_number\n  | every 1m;\n\n@top_metric_filtered_by_another_metric\n  'agent.googleapis.com/memory/percent_used', \n  'agent.googleapis.com/mssql/connections/user',\n  10"
+                }
+              }
+            ],
+            "timeshiftDuration": "0s",
+            "yAxis": {
+              "label": "y1Axis",
+              "scale": "LINEAR"
+            }
+          }
+        },
+        "width": 6,
+        "xPos": 0,
+        "yPos": 12
+      }
+    ]
+  }
+}
