@@ -26,4 +26,4 @@ Note: [Blue Medora Bindplane](https://cloud.google.com/stackdriver/blue-medora) 
 |MS SQL Server Overview|
 |:----------------------|
 |Filename: [mssql-overview.json](mssql-overview.json)|
-|The dashboard displays the overview of metrics collected by the Ops Agent for IIS. This includes charts for `SQL Server open connections`, `SQL Server transaction rate`, `SQL Server write transaction rate` and a couple charts for VM Instances.|
+|The dashboard displays the overview of metrics collected by the Ops Agent for MS SQL Server. This includes charts for `SQL Server open connections`, `SQL Server transaction rate`, `SQL Server write transaction rate` and a couple charts for VM Instances.|
